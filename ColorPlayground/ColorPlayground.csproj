@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ColorLib\ColorLib.csproj" />
     <ProjectReference Include="..\WpfUtils\WpfUtils.csproj" />
   </ItemGroup>
 

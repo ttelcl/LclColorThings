@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPlayground", "ColorPla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorLib", "ColorLib\ColorLib.csproj", "{1160ABF4-2066-428C-AC6A-31C765403543}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{18339A77-1F0D-4743-A035-174D60D7CF9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.ColorLib", "UnitTest.ColorLib\UnitTest.ColorLib.csproj", "{0A2B5EB6-74F5-4938-AD64-B28D1A13B017}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,10 @@ Global
 		{1160ABF4-2066-428C-AC6A-31C765403543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1160ABF4-2066-428C-AC6A-31C765403543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1160ABF4-2066-428C-AC6A-31C765403543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A2B5EB6-74F5-4938-AD64-B28D1A13B017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A2B5EB6-74F5-4938-AD64-B28D1A13B017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A2B5EB6-74F5-4938-AD64-B28D1A13B017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A2B5EB6-74F5-4938-AD64-B28D1A13B017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 		{4ABD873D-9236-4F46-B5B7-6698A50CD6F6} = {D8D56467-A4B3-4F95-B791-7E2B8A9640A3}
 		{983602BB-A8A4-48C4-B49F-32803932B829} = {60E7F5C3-D191-4C8C-82C0-6FDF117AF09B}
 		{1160ABF4-2066-428C-AC6A-31C765403543} = {D8D56467-A4B3-4F95-B791-7E2B8A9640A3}
+		{0A2B5EB6-74F5-4938-AD64-B28D1A13B017} = {18339A77-1F0D-4743-A035-174D60D7CF9D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7664AAD2-56F1-4E23-B065-2FF7ADC42A95}
