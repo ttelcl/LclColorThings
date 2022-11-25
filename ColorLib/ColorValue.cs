@@ -19,12 +19,12 @@ namespace ColorLib
   /// <summary>
   /// Models a color value as r-g-b floats
   /// </summary>
-  public class ColorDetail
+  public class ColorValue
   {
     /// <summary>
     /// Create a new ColorDetail
     /// </summary>
-    public ColorDetail(double r, double g, double b)
+    public ColorValue(double r, double g, double b)
     {
       if(r < 0.0 || r > 1.0)
       {
@@ -61,15 +61,15 @@ namespace ColorLib
     /// <summary>
     /// Create from byte values (instead of the default 0.0-1.0 ranges)
     /// </summary>
-    public static ColorDetail FromBytes(byte rbyte, byte gbyte, byte bbyte)
+    public static ColorValue FromBytes(byte rbyte, byte gbyte, byte bbyte)
     {
-      return new ColorDetail(ByteToFraction(rbyte), ByteToFraction(gbyte), ByteToFraction(bbyte));
+      return new ColorValue(ByteToFraction(rbyte), ByteToFraction(gbyte), ByteToFraction(bbyte));
     }
 
     /// <summary>
     /// Create from a hex string (optional prefixed with a "#")
     /// </summary>
-    public static ColorDetail FromHex(string hexcolor)
+    public static ColorValue FromHex(string hexcolor)
     {
       var hexcolor2 = hexcolor;
       if(hexcolor2.StartsWith("#"))
@@ -84,7 +84,7 @@ namespace ColorLib
       var rbyte = Byte.Parse(hexcolor2[..2], NumberStyles.HexNumber);
       var gbyte = Byte.Parse(hexcolor2[2..4], NumberStyles.HexNumber);
       var bbyte = Byte.Parse(hexcolor2[4..6], NumberStyles.HexNumber);
-      return new ColorDetail(ByteToFraction(rbyte), ByteToFraction(gbyte), ByteToFraction(bbyte));
+      return new ColorValue(ByteToFraction(rbyte), ByteToFraction(gbyte), ByteToFraction(bbyte));
     }
 
     /// <summary>
@@ -99,10 +99,10 @@ namespace ColorLib
     /// <param name="lightness">
     /// The lightness (range 0.0 - 1.0)
     /// </param>
-    public static ColorDetail FromHsl(double? hue, double saturation, double lightness)
+    public static ColorValue FromHsl(double? hue, double saturation, double lightness)
     {
       HslToRgb(hue, saturation, lightness, out var r, out var g, out var b);
-      return new ColorDetail(r, g, b);
+      return new ColorValue(r, g, b);
     }
 
     /// <summary>

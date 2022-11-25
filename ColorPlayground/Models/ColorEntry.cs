@@ -26,10 +26,10 @@ namespace ColorPlayground.Models
     /// </summary>
     public ColorEntry(
       string label,
-      ColorDetail? current = null)
+      ColorValue? current = null)
     {
       _label = label;
-      _current = current ?? new ColorDetail(0.5, 0.5, 0.5);
+      _current = current ?? new ColorValue(0.5, 0.5, 0.5);
     }
 
     public string Label {
@@ -42,7 +42,7 @@ namespace ColorPlayground.Models
     }
     private string _label;
 
-    public ColorDetail Current {
+    public ColorValue Current {
       get => _current;
       set {
         var oldR = _current.R;
@@ -67,14 +67,14 @@ namespace ColorPlayground.Models
         }
       }
     }
-    private ColorDetail _current;
+    private ColorValue _current;
 
     public Color CurrentColor {
       get => Current.WpfColor;
       set {
         if(value != Current.WpfColor)
         {
-          Current = ColorDetail.FromBytes(value.R, value.G, value.B);
+          Current = ColorValue.FromBytes(value.R, value.G, value.B);
         }
       }
     }
@@ -82,7 +82,7 @@ namespace ColorPlayground.Models
     public string HexColor {
       get => Current.HexColor; 
       set {
-        var c = ColorDetail.FromHex(value);
+        var c = ColorValue.FromHex(value);
         Current = c;
       }
     }
@@ -92,7 +92,7 @@ namespace ColorPlayground.Models
       set {
         if(value != Current.R)
         {
-          Current = new ColorDetail(value, Current.G, Current.B);
+          Current = new ColorValue(value, Current.G, Current.B);
         }
       }
     }
@@ -102,7 +102,7 @@ namespace ColorPlayground.Models
       set {
         if(value != Current.G)
         {
-          Current = new ColorDetail(Current.R, value, Current.B);
+          Current = new ColorValue(Current.R, value, Current.B);
         }
       }
     }
@@ -112,7 +112,7 @@ namespace ColorPlayground.Models
       set {
         if(value != Current.B)
         {
-          Current = new ColorDetail(Current.R, Current.G, value);
+          Current = new ColorValue(Current.R, Current.G, value);
         }
       }
     }

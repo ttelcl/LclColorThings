@@ -19,7 +19,7 @@ namespace UnitTest.ColorLib
     [Fact]
     public void CanConvertToHex()
     {
-      var yellow = new ColorDetail(1, 1, 0);
+      var yellow = new ColorValue(1, 1, 0);
       Assert.Equal("#ffff00", yellow.HexColor);
     }
 
@@ -31,8 +31,8 @@ namespace UnitTest.ColorLib
       // differences
       for(byte b=0; b<255; b++)
       {
-        var d = ColorDetail.ByteToFraction(b);
-        var b2 = ColorDetail.FractionToByte(d);
+        var d = ColorValue.ByteToFraction(b);
+        var b2 = ColorValue.FractionToByte(d);
         Assert.Equal(b, b2);
       }
     }
@@ -40,15 +40,15 @@ namespace UnitTest.ColorLib
     [Fact]
     public void CanParseHexColors()
     {
-      var white = ColorDetail.FromHex("#ffffff");
+      var white = ColorValue.FromHex("#ffffff");
       Assert.Equal(1.0, white.R);
       Assert.Equal(1.0, white.G);
       Assert.Equal(1.0, white.B);
-      var black = ColorDetail.FromHex("000000");
+      var black = ColorValue.FromHex("000000");
       Assert.Equal(0.0, black.R);
       Assert.Equal(0.0, black.G);
       Assert.Equal(0.0, black.B);
-      var violet = ColorDetail.FromHex("ff00ff");
+      var violet = ColorValue.FromHex("ff00ff");
       Assert.Equal(1.0, violet.R);
       Assert.Equal(0.0, violet.G);
       Assert.Equal(1.0, violet.B);
@@ -57,10 +57,10 @@ namespace UnitTest.ColorLib
     [Fact]
     public void CanSerializeAndDeserialize()
     {
-      var color = ColorDetail.FromHex("#4ef2b0");
+      var color = ColorValue.FromHex("#4ef2b0");
       var json = JsonConvert.SerializeObject(color, Formatting.Indented);
       _output.WriteLine(json);
-      var color2 = JsonConvert.DeserializeObject<ColorDetail>(json);
+      var color2 = JsonConvert.DeserializeObject<ColorValue>(json);
       Assert.Equal("#4ef2b0", color2!.HexColor);
     }
 
@@ -68,57 +68,57 @@ namespace UnitTest.ColorLib
     public void RgbToHlsTests()
     {
       // Grays
-      ColorDetail.RgbToHsl(0.0, 0.0, 0.0, out var hue, out var saturation, out var lightness);
+      ColorValue.RgbToHsl(0.0, 0.0, 0.0, out var hue, out var saturation, out var lightness);
       Assert.Null(hue);
       Assert.Equal(0.0, saturation);
       Assert.Equal(0.0, lightness);
-      ColorDetail.RgbToHsl(1.0, 1.0, 1.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(1.0, 1.0, 1.0, out hue, out saturation, out lightness);
       Assert.Null(hue);
       Assert.Equal(0.0, saturation);
       Assert.Equal(1.0, lightness);
-      ColorDetail.RgbToHsl(0.5, 0.5, 0.5, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.5, 0.5, 0.5, out hue, out saturation, out lightness);
       Assert.Null(hue);
       Assert.Equal(0.0, saturation);
       Assert.Equal(0.5, lightness);
 
       // Primary & Secondary colors
-      ColorDetail.RgbToHsl(1.0, 0.0, 0.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(1.0, 0.0, 0.0, out hue, out saturation, out lightness);
       Assert.Equal(0.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(1.0, 1.0, 0.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(1.0, 1.0, 0.0, out hue, out saturation, out lightness);
       Assert.Equal(60.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(0.0, 1.0, 0.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.0, 1.0, 0.0, out hue, out saturation, out lightness);
       Assert.Equal(120.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(0.0, 1.0, 1.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.0, 1.0, 1.0, out hue, out saturation, out lightness);
       Assert.Equal(180.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(0.0, 0.0, 1.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.0, 0.0, 1.0, out hue, out saturation, out lightness);
       Assert.Equal(240.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(1.0, 0.0, 1.0, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(1.0, 0.0, 1.0, out hue, out saturation, out lightness);
       Assert.Equal(300.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.5, lightness);
 
       // non-primary saturated
-      ColorDetail.RgbToHsl(1.0, 0.5, 0.5, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(1.0, 0.5, 0.5, out hue, out saturation, out lightness);
       Assert.Equal(0.0, hue);
       Assert.Equal(1.0, saturation);
       Assert.Equal(0.75, lightness);
 
       // non-saturated
-      ColorDetail.RgbToHsl(0.75, 0.25, 0.25, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.75, 0.25, 0.25, out hue, out saturation, out lightness);
       Assert.Equal(0.0, hue);
       Assert.Equal(0.5, saturation);
       Assert.Equal(0.5, lightness);
-      ColorDetail.RgbToHsl(0.75, 0.75, 0.25, out hue, out saturation, out lightness);
+      ColorValue.RgbToHsl(0.75, 0.75, 0.25, out hue, out saturation, out lightness);
       Assert.Equal(60.0, hue);
       Assert.Equal(0.5, saturation);
       Assert.Equal(0.5, lightness);
@@ -128,48 +128,48 @@ namespace UnitTest.ColorLib
     public void HlsToRgbTests()
     {
       // Gray
-      ColorDetail.HslToRgb(null, 0.0, 0.42, out var r, out var g, out var b);
+      ColorValue.HslToRgb(null, 0.0, 0.42, out var r, out var g, out var b);
       Assert.Equal(0.42, r);
       Assert.Equal(0.42, g);
       Assert.Equal(0.42, b);
 
       // Primaries & Secondaries
-      ColorDetail.HslToRgb(0.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(0.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(1.0, r);
       Assert.Equal(0.0, g);
       Assert.Equal(0.0, b);
 
-      ColorDetail.HslToRgb(60.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(60.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(1.0, r);
       Assert.Equal(1.0, g);
       Assert.Equal(0.0, b);
 
-      ColorDetail.HslToRgb(-300.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(-300.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(1.0, r);
       Assert.Equal(1.0, g);
       Assert.Equal(0.0, b);
 
-      ColorDetail.HslToRgb(120.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(120.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(0.0, r);
       Assert.Equal(1.0, g);
       Assert.Equal(0.0, b);
 
-      ColorDetail.HslToRgb(180.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(180.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(0.0, r);
       Assert.Equal(1.0, g);
       Assert.Equal(1.0, b);
 
-      ColorDetail.HslToRgb(240.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(240.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(0.0, r);
       Assert.Equal(0.0, g);
       Assert.Equal(1.0, b);
 
-      ColorDetail.HslToRgb(-120.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(-120.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(0.0, r);
       Assert.Equal(0.0, g);
       Assert.Equal(1.0, b);
 
-      ColorDetail.HslToRgb(300.0, 1.0, 0.5, out r, out g, out b);
+      ColorValue.HslToRgb(300.0, 1.0, 0.5, out r, out g, out b);
       Assert.Equal(1.0, r);
       Assert.Equal(0.0, g);
       Assert.Equal(1.0, b);
@@ -178,7 +178,7 @@ namespace UnitTest.ColorLib
     [Fact]
     public void HslRoundtripTest()
     {
-      var c = ColorDetail.FromHsl(0.0, 1.0, 0.5);
+      var c = ColorValue.FromHsl(0.0, 1.0, 0.5);
       Assert.Equal(1.0, c.R);
       Assert.Equal(0.0, c.G);
       Assert.Equal(0.0, c.B);
@@ -186,7 +186,7 @@ namespace UnitTest.ColorLib
       Assert.Equal(1.0, c.Saturation);
       Assert.Equal(0.5, c.Lightness);
 
-      c = ColorDetail.FromHsl(42.0, 0.7, 0.6);
+      c = ColorValue.FromHsl(42.0, 0.7, 0.6);
       var json = JsonConvert.SerializeObject(c, Formatting.Indented);
       _output.WriteLine(json);
       // Some rounding errors are to be expected, so compare to limited precision
