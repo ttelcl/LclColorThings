@@ -13,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using MahApps.Metro.Controls;
-
 namespace ColorPlayground
 {
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainWindow: MetroWindow
-  {
-    public MainWindow()
+    /// <summary>
+    /// Interaction logic for ColorBox.xaml
+    /// </summary>
+    public partial class ColorBox: UserControl
     {
-      InitializeComponent();
+        public ColorBox()
+        {
+            InitializeComponent();
+        }
     }
-
-   
-  }
 }
