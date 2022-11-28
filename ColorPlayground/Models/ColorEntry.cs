@@ -31,9 +31,14 @@ namespace ColorPlayground.Models
     {
       _label = label;
       _current = current ?? new ColorValue(0.5, 0.5, 0.5);
+      _hueColor = (current == null || current.Saturation <= 0 || !current.Hue.HasValue) 
+        ? new ColorValue(0.5, 0.5, 0.5) 
+        : ColorValue.FromHsl(current.Hue, 1.0, 0.5);
       _currentBrush = new SolidColorBrush(_current.WpfColor);
+      _hueBrush = new SolidColorBrush(_hueColor.WpfColor);
       _contrastBrush = _current.Lightness > 0.5 ? Brushes.Black : Brushes.White;
-      _stateMargin = new Thickness(50, 0, 50, 0);
+      _stateMargin = InactiveMargin;
+      _stateHeight = InactiveHeight;
       _isCurrentEntry = false;
     }
 
@@ -64,11 +69,30 @@ namespace ColorPlayground.Models
       set {
         if(SetValueProperty(ref _isCurrentEntry, value))
         {
-          StateMargin = _isCurrentEntry ? new Thickness(0, 0, 0, 0) : new Thickness(50, 0, 50, 0);
+          StateMargin = _isCurrentEntry ? ActiveMargin : InactiveMargin;
+          StateHeight = _isCurrentEntry ? ActiveHeight : InactiveHeight;
         }
       }
     }
     private bool _isCurrentEntry;
+
+    public int StateHeight {
+      get => _stateHeight;
+      set {
+        if(SetValueProperty(ref _stateHeight, value))
+        {
+        }
+      }
+    }
+    private int _stateHeight;
+    
+    public int ActiveHeight => 60;
+
+    public int InactiveHeight => 30;
+
+    public Thickness ActiveMargin => new Thickness(5, 0, 5, 0);
+
+    public Thickness InactiveMargin => new Thickness(30, 0, 30, 0);
 
     public Thickness StateMargin {
       get => _stateMargin;
@@ -96,21 +120,28 @@ namespace ColorPlayground.Models
           ContrastBrush = _current.Lightness > 0.5 ? Brushes.Black : Brushes.White;
           RaisePropertyChanged(nameof(HexColor));
           RaisePropertyChanged(nameof(CurrentColor));
+          HueColor = _current.Saturation > 0 && _current.Hue.HasValue
+            ? ColorValue.FromHsl(_current.Hue, 1.0, 0.5)
+            : new ColorValue(0.5, 0.5, 0.5);
           if(oldR != _current.R)
           {
             RaisePropertyChanged(nameof(R));
+            RaisePropertyChanged(nameof(R255));
           }
           if(oldG != _current.G)
           {
             RaisePropertyChanged(nameof(G));
+            RaisePropertyChanged(nameof(G255));
           }
           if(oldB != _current.B)
           {
             RaisePropertyChanged(nameof(B));
+            RaisePropertyChanged(nameof(B255));
           }
           if(oldHue != (_current.Hue ?? 0))
           {
             RaisePropertyChanged(nameof(Hue));
+            RaisePropertyChanged(nameof(HueText));
           }
           if(hadHue != _current.Hue.HasValue)
           {
@@ -119,15 +150,28 @@ namespace ColorPlayground.Models
           if(oldS != Current.Saturation)
           {
             RaisePropertyChanged(nameof(Saturation));
+            RaisePropertyChanged(nameof(SaturationText));
           }
           if(oldL != Current.Lightness)
           {
             RaisePropertyChanged(nameof(Lightness));
+            RaisePropertyChanged(nameof(LightnessText));
           }
         }
       }
     }
     private ColorValue _current;
+
+    public ColorValue HueColor {
+      get => _hueColor;
+      set {
+        if(SetInstanceProperty(ref _hueColor, value))
+        {
+          HueBrush = new SolidColorBrush(_hueColor.WpfColor);
+        }
+      }
+    }
+    private ColorValue _hueColor;
 
     public Color CurrentColor {
       get => Current.WpfColor;
@@ -148,6 +192,16 @@ namespace ColorPlayground.Models
       }
     }
     private Brush _currentBrush;
+
+    public Brush HueBrush {
+      get => _hueBrush;
+      set {
+        if(SetInstanceProperty(ref _hueBrush, value))
+        {
+        }
+      }
+    }
+    private Brush _hueBrush;
 
     public Brush ContrastBrush {
       get => _contrastBrush;
@@ -197,6 +251,18 @@ namespace ColorPlayground.Models
       }
     }
 
+    public string R255 {
+      get => ColorValue.FractionToByte(R).ToString();
+    }
+
+    public string G255 {
+      get => ColorValue.FractionToByte(G).ToString();
+    }
+
+    public string B255 {
+      get => ColorValue.FractionToByte(B).ToString();
+    }
+
     public double Hue {
       get => Current.Hue ?? 0;
       set {
@@ -238,5 +304,16 @@ namespace ColorPlayground.Models
       }
     }
 
+    public string HueText {
+      get => HasHue ? Math.Round(Hue).ToString() + "\u00b0" : "-";
+    }
+
+    public string SaturationText {
+      get => Math.Round(Saturation * 100.0).ToString() + "%";
+    }
+
+    public string LightnessText {
+      get => Math.Round(Lightness * 100.0).ToString() + "%";
+    }
   }
 }

@@ -15,13 +15,15 @@
   d:DataContext="{d:DesignInstance local:MainViewModel, IsDesignTimeCreatable=False}">
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="50"/>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="*"/>
     </Grid.RowDefinitions>
-    <Border Grid.Row="0">
-      <!-- Control Pane -->
+    <local:ColorEditPane 
+      Grid.Row="0"
+      DataContext="{Binding CurrentEntry}"/>
+    <!--<Border Grid.Row="0">
       <TextBlock Text="{Binding CurrentEntry.Label}"/>
-    </Border>
+    </Border>-->
     <ListBox
       Grid.Row="1"
       HorizontalContentAlignment="Stretch"

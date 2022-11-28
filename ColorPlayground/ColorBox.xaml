@@ -14,15 +14,30 @@
     BorderBrush="{Binding ContrastBrush}"
     BorderThickness="1"
     CornerRadius="10"
-    MinHeight="60"
+    MinHeight="{Binding StateHeight}"
     Background="{Binding CurrentBrush}"
     Margin="{Binding StateMargin}">
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
-      <TextBlock Text="{Binding Label}" Foreground="{Binding ContrastBrush}" FontSize="24"/>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0"
+                 Text="{Binding Label}" 
+                 Foreground="{Binding ContrastBrush}" 
+                 FontSize="24" 
+                 VerticalAlignment="Center"
+                 Margin="10,0,10,0"/>
+      <TextBlock Grid.Column="1"
+                 Text="{Binding Current.HexColor}" 
+                 Foreground="{Binding ContrastBrush}" 
+                 FontSize="24" 
+                 VerticalAlignment="Center"
+                 HorizontalAlignment="Left"
+                 Margin="10,0,10,0"/>
     </Grid>
   </Border>
 </UserControl>
